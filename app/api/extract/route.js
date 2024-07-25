@@ -10,6 +10,14 @@ const extractEmailsFromPage = async (url) => {
   let pageTitle = '';
   let pageDescription = '';
 
+  const allowedTLDs = [
+    ".com", ".org", ".net", ".int", ".edu", ".gov", ".mil", ".co", ".us", ".uk", ".ca", ".de", ".fr", ".au", ".ru", ".cn", ".jp", ".br", ".in", ".mx", ".nl", ".kr", ".se", ".es", ".ch", ".it", ".no", ".fi", ".dk", ".pl", ".nz", ".za", ".tr", ".gr", ".pt", ".ar", ".be", ".at", ".il", ".sg", ".hk", ".ie", ".cz", ".cl", ".hu", ".my", ".th", ".sk", ".ua", ".ro", ".bg", ".lt", ".lv", ".ee", ".si", ".hr", ".rs", ".ba", ".is", ".mt", ".cy", ".lu", ".li", ".by", ".mk", ".ge", ".am", ".az", ".al", ".md", ".me", ".ly", ".io", ".ai", ".app", ".dev", ".tech", ".xyz", ".site", ".online", ".shop", ".club", ".info", ".biz", ".pro", ".name", ".mobi", ".jobs", ".travel", ".museum", ".coop", ".aero", ".asia", ".post", ".tel"
+  ];
+
+  const isEmailValid = (email) => {
+    return allowedTLDs.some(tld => email.endsWith(tld));
+  };
+
   try {
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
@@ -22,9 +30,15 @@ const extractEmailsFromPage = async (url) => {
     pageDescription = $('meta[name="description"]').attr('content') || '';
     console.log('Page Description:', pageDescription);
 
-    // Extract emails
-    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
-    $('body').text().match(emailPattern)?.forEach(email => emails.add(email));
+    // Extract emails with stricter pattern
+    const emailPattern = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?\b/g;
+    const bodyText = $('body').text();
+    (bodyText.match(emailPattern) || []).forEach(email => {
+      if (isEmailValid(email.toLowerCase())) {
+        emails.add(email.toLowerCase());
+      }
+    });
+
     console.log('Extracted Emails:', Array.from(emails));
 
     // Extract links and crawl subpages
@@ -35,7 +49,12 @@ const extractEmailsFromPage = async (url) => {
       try {
         const subResponse = await axios.get(subUrl);
         const sub$ = cheerio.load(subResponse.data);
-        sub$('body').text().match(emailPattern)?.forEach(email => emails.add(email));
+        const subBodyText = sub$('body').text();
+        (subBodyText.match(emailPattern) || []).forEach(email => {
+          if (isEmailValid(email.toLowerCase())) {
+            emails.add(email.toLowerCase());
+          }
+        });
       } catch (error) {
         console.error(`Error fetching subpage ${subUrl}:`, error.message);
       }
