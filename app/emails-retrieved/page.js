@@ -4,7 +4,7 @@ import dbConnect from '@/config/database';
 import ExtractUrl from '@/models/ExtractUrl';
 import Link from 'next/link';
 import Header from '@/components/Header';
-
+import Footer from '@/components/Footer';
 // Function to format the URL for display in the link
 const formatUrlForDisplay = (url) => {
   try {
@@ -54,6 +54,7 @@ export default async function EmailsRetrieved() {
           })}
         </ul>
       </main>
+      <Footer />
     </div>
   );
 }

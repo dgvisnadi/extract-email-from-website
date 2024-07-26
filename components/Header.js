@@ -2,16 +2,16 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className="bg-gray-800 text-white p-4 w-full flex justify-between items-center">
-      <Link href="/" className="text-white text-2xl font-bold hover:text-gray-300">
-        Extract Emails From Website
-      </Link>
-      <nav>
-        <Link href="/emails-retrieved" className="text-white hover:text-gray-300">
-          Emails Retrieved
-        </Link>
-      </nav>
-    </header>
+<div class="navbar bg-neutral text-neutral-content">
+<div class="flex-1">
+  <a class="btn btn-ghost text-xl" href="/">Extract Emails From Website</a>
+</div>
+<div class="flex-none">
+  <ul class="menu menu-horizontal px-1">
+    <li><a href="/emails-retrieved">Emails Retrieved</a></li>
+  </ul>
+</div>
+</div>
   );
 };
 

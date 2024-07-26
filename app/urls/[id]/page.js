@@ -3,6 +3,7 @@ import ExtractUrl from '@/models/ExtractUrl';
 import Link from 'next/link';
 import mongoose from 'mongoose';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 // Function to format the URL for display
 const formatUrlForDisplay = (url) => {
@@ -119,6 +120,7 @@ export default async function UrlPage({ params }) {
         <main className="w-full max-w-3xl bg-white rounded-lg shadow-md p-6 text-center">
           <p className="text-red-600">Error fetching URL data.</p>
         </main>
+        <Footer />
       </div>
     );
   }
