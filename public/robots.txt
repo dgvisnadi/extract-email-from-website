@@ -1,4 +1,9 @@
+# *
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: https://extractemailfromwebsite.com/api/sitemap.xml
+# Host
+Host: https://extractemailfromwebsite.com
+
+# Sitemaps
+Sitemap: https://extractemailfromwebsite.com/sitemap.xml
