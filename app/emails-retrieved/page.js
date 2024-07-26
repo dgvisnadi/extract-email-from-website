@@ -1,3 +1,5 @@
+export const fetchCache = 'force-no-store';
+
 import dbConnect from '@/config/database';
 import ExtractUrl from '@/models/ExtractUrl';
 import Link from 'next/link';
