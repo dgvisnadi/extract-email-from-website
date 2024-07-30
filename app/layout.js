@@ -14,15 +14,18 @@ export default function RootLayout({ children }) {
         <meta name="description" content={metadata.description} />
         <title>{metadata.title}</title>
 
-        {/* <!-- Google tag (gtag.js) --> */}
+      {/* Google Analytics */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZHS5VS12Z"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-QZHS5VS12Z');
-      </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QZHS5VS12Z');
+            `,
+          }}
+        />
       </head>
 
       <body>{children}</body>
