@@ -8,6 +8,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head> 
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={metadata.description} />
+        <title>{metadata.title}</title>
+
+        {/* <!-- Google tag (gtag.js) --> */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZHS5VS12Z"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-QZHS5VS12Z');
+      </script>
+      </head>
+
       <body>{children}</body>
     </html>
   );
